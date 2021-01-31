@@ -6,6 +6,10 @@
   "module": "dist/ctrl-scripts.esm.js",
   "umd": "dist/ctrl-scripts.umd.js",
   "typings": "dist/index.d.ts",
+  "bin": {
+    "ctrl": "dist/bin.js",
+    "ctrl-scripts": "dist/bin.js"
+  },
   "files": [
     "dist",
     "coverage"

@@ -74,6 +74,15 @@ const getPlugins = (bundleType) => [
 
 export default [
   {
+    input: './compiled/bin.js',
+    external: getExternal('CJS_DEV'),
+    output: {
+      file: pkg.bin.ctrl,
+      format: 'cjs'
+    },
+    plugins: getPlugins('CJS_DEV')
+  },
+  {
     input: './compiled/index.js',
     external: getExternal('CJS_DEV'),
     output: {

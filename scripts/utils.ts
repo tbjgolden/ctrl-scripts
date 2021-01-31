@@ -16,8 +16,8 @@ const defaults: State = {
 
 const projectRoot = path.join(__dirname, '..')
 
-const configPath = path.join(projectRoot, 'config')
-const stateFilePath = path.join(configPath, '.state.json')
+const stateDirPath = path.join(projectRoot, 'config/state')
+const stateFilePath = path.join(stateDirPath, 'state.json')
 
 export class PersistentState {
   _state: State
@@ -35,7 +35,7 @@ export class PersistentState {
   }
 
   write(): void {
-    mkdirp.sync(configPath)
+    mkdirp.sync(stateDirPath)
     fs.writeFileSync(stateFilePath, JSON.stringify(this._state))
   }
 

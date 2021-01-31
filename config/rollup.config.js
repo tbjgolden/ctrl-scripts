@@ -10,7 +10,7 @@ import { terser } from 'rollup-plugin-terser'
 // Helpers
 import dedent from 'dedent'
 import pkg from '../package.json'
-import { hasAddedReact } from './.state.json'
+import { hasAddedReact } from './state/state.json'
 
 const browserGlobals = {
   'react-dom': 'ReactDOM',

@@ -48,6 +48,11 @@
     "typedoc": "typedoc --out docs/api --theme markdown --readme none --entryPoints \"src/index.ts*\"",
     "semantic-release": "semantic-release"
   },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"

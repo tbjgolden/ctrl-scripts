@@ -77,6 +77,7 @@ export default [
     input: './compiled/bin.js',
     external: getExternal('CJS_DEV'),
     output: {
+      banner: '#!/usr/bin/env node\n',
       file: pkg.bin.ctrl,
       format: 'cjs'
     },
@@ -86,7 +87,6 @@ export default [
     input: './compiled/index.js',
     external: getExternal('CJS_DEV'),
     output: {
-      banner: '#!/usr/bin/env node\n',
       file: pkg.main,
       format: 'cjs',
       sourcemap: true

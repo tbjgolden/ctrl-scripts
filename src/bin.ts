@@ -23,7 +23,12 @@ if (require.main === module) {
         method === undefined ? 'undefined' : JSON.stringify(method)
       } in \`ctrl <command> ...\``
     )
-    console.log(`Valid commands:\n${fns.map(([k]) => ` - ${k}`).join('\n')}`)
+    console.log(
+      `Valid commands:\n${fns
+        .sort(([a], [b]) => (a > b ? 1 : -1))
+        .map(([k]) => ` - ${k}`)
+        .join('\n')}`
+    )
   }
 } else {
   console.log('This script is not meant to be run directly. Use:')

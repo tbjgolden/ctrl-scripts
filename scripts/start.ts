@@ -1,10 +1,8 @@
-import { PersistentState } from './utils'
+import { getState } from './utils'
 import { spawn } from 'child_process'
 
-const state = new PersistentState()
-
 // Storybook
-if (state.get().hasAddedReact) {
+if (getState().hasAddedReact) {
   ;(() => {
     try {
       require('@storybook/react/dist/server')

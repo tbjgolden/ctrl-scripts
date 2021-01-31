@@ -1,5 +1,6 @@
 import {
-  PersistentState,
+  getState,
+  setState,
   addScriptDependency,
   installDependencies
 } from './utils'
@@ -8,8 +9,7 @@ import path from 'path'
 import dedent from 'dedent'
 
 const run = async () => {
-  const state = new PersistentState()
-  if (state.get().hasAddedReact) {
+  if (getState().hasAddedReact) {
     return console.log('Already added React')
   }
 
@@ -73,7 +73,7 @@ const run = async () => {
     )
   }
 
-  state.set({ hasAddedReact: true })
+  setState({ hasAddedReact: true })
 }
 
 run()

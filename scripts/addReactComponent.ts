@@ -1,15 +1,14 @@
 import fs from 'fs'
 import path from 'path'
 import dedent from 'dedent'
-import { PersistentState } from './utils'
+import { getState } from './utils'
 
 const run = async (name?: string) => {
   if (typeof name !== 'string' || !/^[A-Z][a-z]+(?:[A-Z][a-z]+)*$/.test(name)) {
     throw new Error('Name must be a PascalCase string')
   }
 
-  const state = new PersistentState()
-  if (!state.get().hasAddedReact) {
+  if (!getState().hasAddedReact) {
     throw new Error('Need to add React first')
   }
 

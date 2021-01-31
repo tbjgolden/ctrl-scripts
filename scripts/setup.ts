@@ -174,13 +174,13 @@ const setup = async () => {
   const year = `${new Date().getFullYear()}`
 
   const mapper = {
-    'ctrl-scripts': projectName,
-    'CTRLScripts': variableName,
-    'tbjgolden': githubUsername,
-    'Tom Golden': authorName,
-    'github@tbjgolden.com': authorEmail,
-    'Scripts for create-typescript-react-library': projectDescription,
-    '2021': year
+    'gocvmmeyaahgakggbjwmcmif': projectName,
+    'Gocvmmeyaahgakggbjwmcmif': variableName,
+    'xrdnwftmsmirdshgpfoyocjh': githubUsername,
+    'zkhshfmpcvllotfgoigdwyrr': authorName,
+    'fnrnhzcp@gohyrqjsyole.jv': authorEmail,
+    'rwmgkcxafpdrkuvtfszrfvwv': projectDescription,
+    '276768723349764835332642': year
   }
 
   const replacerRegex = new RegExp(
@@ -219,13 +219,13 @@ const setup = async () => {
     path.join(__dirname, '../README.md'),
     dedent(
       `
-      # \`ctrl-scripts\`
+      # \`gocvmmeyaahgakggbjwmcmif\`
 
-      [![npm version](https://img.shields.io/npm/v/ctrl-scripts.svg?style=flat-square)](https://www.npmjs.com/package/ctrl-scripts)
+      [![npm version](https://img.shields.io/npm/v/gocvmmeyaahgakggbjwmcmif.svg?style=flat-square)](https://www.npmjs.com/package/gocvmmeyaahgakggbjwmcmif)
       [![test coverage](https://img.shields.io/badge/dynamic/json?style=flat-square&color=brightgreen&label=coverage&query=%24.total.branches.pct&suffix=%25&url=https%3A%2F%2Funpkg.com%2F${encodeURIComponent(
         projectName
-      )}%2Fcoverage%2Fcoverage-summary.json)](https://www.npmjs.com/package/ctrl-scripts)
-      [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tbjgolden/ctrl-scripts/Release?style=flat-square)](https://github.com/tbjgolden/ctrl-scripts/actions?query=workflow%3ARelease)
+      )}%2Fcoverage%2Fcoverage-summary.json)](https://www.npmjs.com/package/gocvmmeyaahgakggbjwmcmif)
+      [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/xrdnwftmsmirdshgpfoyocjh/gocvmmeyaahgakggbjwmcmif/Release?style=flat-square)](https://github.com/xrdnwftmsmirdshgpfoyocjh/gocvmmeyaahgakggbjwmcmif/actions?query=workflow%3ARelease)
 
       ${
         projectDescription
@@ -239,8 +239,8 @@ const setup = async () => {
       ## Installation
 
       \`\`\`sh
-      npm install ctrl-scripts --save
-      # yarn add ctrl-scripts
+      npm install gocvmmeyaahgakggbjwmcmif --save
+      # yarn add gocvmmeyaahgakggbjwmcmif
       \`\`\`
 
       Alternatively, there are also client web builds available:
@@ -250,8 +250,8 @@ const setup = async () => {
       \`\`\`html
       <!-- Dependencies -->
 
-      <!-- window.CTRLScripts -->
-      <script src="https://unpkg.com/ctrl-scripts/dist/ctrl-scripts.umd.js"></script>
+      <!-- window.Gocvmmeyaahgakggbjwmcmif -->
+      <script src="https://unpkg.com/gocvmmeyaahgakggbjwmcmif/dist/gocvmmeyaahgakggbjwmcmif.umd.js"></script>
       \`\`\`
 
       ## Documentation
@@ -325,7 +325,7 @@ const setup = async () => {
 
   if (results.length > 0) {
     console.log('Could not find and replace in files:')
-    results.forEach((file: string) => {
+    results.sort().forEach((file: string) => {
       console.log(` - "${path.relative(path.join(__dirname, '..'), file)}"`)
     })
   }

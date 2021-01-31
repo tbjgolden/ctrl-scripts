@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import mkdirp from 'mkdirp'
 import { spawn } from 'child_process'
 import prettier from 'prettier'
 
@@ -19,43 +18,21 @@ const projectRoot = path.join(__dirname, '..')
 const stateDirPath = path.join(projectRoot, 'config/state')
 const stateFilePath = path.join(stateDirPath, 'state.json')
 
-export class PersistentState {
-  _state: State
-
-  constructor() {
-    let _state: Partial<State> | null = null
-    try {
-      _state = JSON.parse(fs.readFileSync(stateFilePath, 'utf8')) ?? null
-    } catch {}
-    this._state = {
-      ...defaults,
-      ...(_state ?? {})
-    }
-    this.write()
+export const getState = (): State => {
+  return {
+    ...defaults,
+    ...JSON.parse(fs.readFileSync(stateFilePath, 'utf8'))
   }
+}
 
-  write(): void {
-    mkdirp.sync(stateDirPath)
-    fs.writeFileSync(stateFilePath, JSON.stringify(this._state))
+export const setState = (diffs: Partial<State>): State => {
+  const result = {
+    ...defaults,
+    ...JSON.parse(fs.readFileSync(stateFilePath, 'utf8')),
+    ...diffs
   }
-
-  get(): State {
-    return this._state
-  }
-
-  set(change: Partial<State>): void {
-    for (const _key in change) {
-      const key = _key as keyof State
-      const val = change[key]
-      if (val !== undefined) {
-        this._state = {
-          ...this._state,
-          ...change
-        }
-      }
-    }
-    this.write()
-  }
+  fs.writeFileSync(stateFilePath, JSON.stringify(result, null, 2))
+  return result
 }
 
 const readmeFilePath = path.join(projectRoot, 'README.md')

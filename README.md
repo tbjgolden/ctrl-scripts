@@ -6,23 +6,10 @@
 
 > **Scripts for create\-typescript\-react\-library**
 
-## Installation
+(Concept inspired by `react-scripts`)
 
-```sh
-npm install ctrl-scripts --save
-# yarn add ctrl-scripts
-```
-
-Alternatively, there are also client web builds available:
-
-<!-- IMPORTANT: Do not delete or change the comments in the code block below -->
-
-```html
-<!-- Dependencies -->
-
-<!-- window.CTRLScripts -->
-<script src="https://unpkg.com/ctrl-scripts/dist/ctrl-scripts.umd.js"></script>
-```
+Automatically installed by
+[create-typescript-react-library](https://github.com/tbjgolden/create-typescript-react-library)
 
 ## Documentation
 

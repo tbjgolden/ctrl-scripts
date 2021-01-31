@@ -1,6 +1,6 @@
 {
   "name": "ctrl-scripts",
-  "version": "0.0.0-semantically-released",
+  "version": "0.0.1",
   "description": "Scripts for create-typescript-react-library",
   "main": "dist/index.js",
   "module": "dist/ctrl-scripts.esm.js",

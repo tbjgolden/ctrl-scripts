@@ -3,14 +3,27 @@ import {
   setState,
   addScriptDependency,
   installDependencies
-} from './utils'
+} from '../utils'
 import fs from 'fs'
 import path from 'path'
 import dedent from 'dedent'
+import appRoot from 'app-root-path'
+
+const storybookDir = path.join(appRoot.path, '.storybook')
 
 const run = async () => {
   if (getState().hasAddedReact) {
     return console.log('Already added React')
+  }
+
+  if (fs.existsSync(storybookDir)) {
+    return console.log(
+      dedent`
+        This script installs and configures storybook.
+        Remove your '.storybook' directory and any storybook packages
+        (but keep your stories!) before running this script
+      `
+    )
   }
 
   addScriptDependency(
@@ -44,12 +57,10 @@ const run = async () => {
     'dev'
   )
 
-  const storybookDir = path.join(__dirname, '../.storybook')
-  if (!fs.existsSync(storybookDir)) {
-    fs.mkdirSync(storybookDir)
-    fs.writeFileSync(
-      path.join(storybookDir, 'main.js'),
-      dedent`
+  fs.mkdirSync(storybookDir)
+  fs.writeFileSync(
+    path.join(storybookDir, 'main.js'),
+    dedent`
       module.exports = {
         stories: [
           "../src/**/*.stories.mdx",
@@ -61,17 +72,16 @@ const run = async () => {
           "@storybook/addon-knobs/register"
         ]
       }
-      ` + '\n'
-    )
-    fs.writeFileSync(
-      path.join(storybookDir, 'preview.js'),
-      dedent`
+    ` + '\n'
+  )
+  fs.writeFileSync(
+    path.join(storybookDir, 'preview.js'),
+    dedent`
       export const parameters = {
         actions: { argTypesRegex: "^on[A-Z].*" },
       }
-      ` + '\n'
-    )
-  }
+    ` + '\n'
+  )
 
   setState({ hasAddedReact: true })
 }

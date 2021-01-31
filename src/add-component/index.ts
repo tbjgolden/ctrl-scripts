@@ -1,7 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import dedent from 'dedent'
-import { getState } from './utils'
+import { getState } from '../utils'
+import appRoot from 'app-root-path'
 
 const run = async (name?: string) => {
   if (typeof name !== 'string' || !/^[A-Z][a-z]+(?:[A-Z][a-z]+)*$/.test(name)) {
@@ -13,7 +14,7 @@ const run = async (name?: string) => {
   }
 
   // Check if already exists
-  const srcDir = path.join(__dirname, '../src')
+  const srcDir = path.join(appRoot.path, 'src')
   const components = fs.readdirSync(srcDir, {
     withFileTypes: true
   })

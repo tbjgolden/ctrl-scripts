@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { spawn } from 'child_process'
 import prettier from 'prettier'
+import appRoot from 'app-root-path'
 
 export type State = {
   lastSync: number
@@ -13,9 +14,7 @@ const defaults: State = {
   hasAddedReact: false
 }
 
-const projectRoot = path.join(__dirname, '..')
-
-const stateDirPath = path.join(projectRoot, 'config/state')
+const stateDirPath = path.join(appRoot.path, 'config/state')
 const stateFilePath = path.join(stateDirPath, 'state.json')
 
 export const getState = (): State => {
@@ -35,7 +34,7 @@ export const setState = (diffs: Partial<State>): State => {
   return result
 }
 
-const readmeFilePath = path.join(projectRoot, 'README.md')
+const readmeFilePath = path.join(appRoot.path, 'README.md')
 const codeRegex = /<!-- ?Dependencies ?-->([\s\S]*?)(?:<!--)/i
 const scriptsRegex = / src="([^"]*)"/g
 
@@ -96,7 +95,7 @@ export const installDependencies = async (
   }
 }
 
-const packageJSONPath = path.join(__dirname, '../package.json')
+const packageJSONPath = path.join(appRoot.path, 'package.json')
 export const mutatePackageJSON = async (
   diffs: Record<string, unknown>
 ): Promise<void> => {

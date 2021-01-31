@@ -4,7 +4,8 @@ import { prompt } from 'enquirer'
 import fg from 'fast-glob'
 import dedent from 'dedent'
 import del from 'del'
-import { mutatePackageJSON } from './utils'
+import appRoot from 'app-root-path'
+import { mutatePackageJSON } from '../utils'
 
 const trimObject = (
   obj: Record<string, string | null | undefined>
@@ -55,13 +56,13 @@ const guessGithubUsername = (): string => {
     }
   }
 
-  return max
+  return maxCount > 1 ? max : ''
 }
 
 const usernameRegex = /github\.com[:\/]([^\/]*)/
 
 const setup = async () => {
-  const initialProjectLoc = path.join(__dirname, '..').split(path.sep)
+  const initialProjectLoc = appRoot.path.split(path.sep)
   const initialProjectDir = initialProjectLoc[initialProjectLoc.length - 1]
 
   const {
@@ -216,7 +217,7 @@ const setup = async () => {
 
   console.log('Replacing starter readme with library readme')
   fs.writeFileSync(
-    path.join(__dirname, '../README.md'),
+    path.join(appRoot.path, 'README.md'),
     dedent(
       `
       # \`gocvmmeyaahgakggbjwmcmif\`
@@ -292,7 +293,7 @@ const setup = async () => {
   }
 
   const files: string[] = []
-  walkSync(path.join(__dirname, '..'), (filepath, stats) => {
+  walkSync(appRoot.path, (filepath, stats) => {
     if (stats.size < 50000) {
       files.push(filepath)
     }
@@ -326,7 +327,7 @@ const setup = async () => {
   if (results.length > 0) {
     console.log('Could not find and replace in files:')
     results.sort().forEach((file: string) => {
-      console.log(` - "${path.relative(path.join(__dirname, '..'), file)}"`)
+      console.log(` - "${path.relative(appRoot.path, file)}"`)
     })
   }
   console.log('Finished find and replace')
@@ -340,7 +341,7 @@ const setup = async () => {
   })
   console.log('Updated package.json')
 
-  await del(path.join(__dirname, '../config/meta'))
+  await del(path.join(appRoot.path, 'config/meta'))
   console.log('Removed create-typescript-react-library logic')
 }
 

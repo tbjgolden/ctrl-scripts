@@ -1,4 +1,4 @@
-import { getState } from './utils'
+import { getState } from '../utils'
 import { spawn } from 'child_process'
 
 // Storybook

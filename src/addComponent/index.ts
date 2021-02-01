@@ -4,7 +4,7 @@ import dedent from 'dedent'
 import { getState } from '../utils'
 import appRoot from 'app-root-path'
 
-const run = async (name?: string) => {
+export const addComponent = async (name?: string): Promise<void> => {
   if (typeof name !== 'string' || !/^[A-Z][a-z]+(?:[A-Z][a-z]+)*$/.test(name)) {
     throw new Error('Name must be a PascalCase string')
   }

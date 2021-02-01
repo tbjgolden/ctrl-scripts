@@ -11,7 +11,7 @@ import appRoot from 'app-root-path'
 
 const storybookDir = path.join(appRoot.path, '.storybook')
 
-const run = async () => {
+export const addReact = async (): Promise<void> => {
   if (getState().hasAddedReact) {
     return console.log('Already added React')
   }
@@ -85,5 +85,3 @@ const run = async () => {
 
   setState({ hasAddedReact: true })
 }
-
-run()

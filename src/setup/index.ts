@@ -7,7 +7,7 @@ import del from 'del'
 import appRoot from 'app-root-path'
 import { mutatePackageJSON } from '../utils'
 
-const trimObject = (
+export const trimObject = (
   obj: Record<string, string | null | undefined>
 ): Record<string, string> => {
   return Object.entries(obj).reduce((o, [k, v]) => {
@@ -16,7 +16,7 @@ const trimObject = (
   }, {} as Record<string, string>)
 }
 
-const guessGithubUsername = (): string => {
+export const guessGithubUsername = (): string => {
   // Guess username from nearby package.json files
   const files = fg
     .sync('../../../**/!(node_modules)/*/package.json', {
@@ -61,7 +61,7 @@ const guessGithubUsername = (): string => {
 
 const usernameRegex = /github\.com[:\/]([^\/]*)/
 
-const setup = async () => {
+export const setup = async (): Promise<void> => {
   const initialProjectLoc = appRoot.path.split(path.sep)
   const initialProjectDir = initialProjectLoc[initialProjectLoc.length - 1]
 
@@ -343,8 +343,4 @@ const setup = async () => {
 
   await del(path.join(appRoot.path, 'config/meta'))
   console.log('Removed create-typescript-react-library logic')
-}
-
-if (require.main === module) {
-  setup()
 }

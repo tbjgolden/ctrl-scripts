@@ -95,7 +95,3 @@ export const addComponent = async (name?: string): Promise<void> => {
     )
   }
 }
-
-if (require.main === module) {
-  run(...process.argv.slice(2))
-}

@@ -14,25 +14,7 @@ const defaults: State = {
   hasAddedReact: false
 }
 
-const stateDirPath = path.join(appRoot.path, 'config/state')
-const stateFilePath = path.join(stateDirPath, 'state.json')
-
-export const getState = (): State => {
-  return {
-    ...defaults,
-    ...JSON.parse(fs.readFileSync(stateFilePath, 'utf8'))
-  }
-}
-
-export const setState = (diffs: Partial<State>): State => {
-  const result = {
-    ...defaults,
-    ...JSON.parse(fs.readFileSync(stateFilePath, 'utf8')),
-    ...diffs
-  }
-  fs.writeFileSync(stateFilePath, JSON.stringify(result, null, 2))
-  return result
-}
+const stateFilePath = path.join(appRoot.path, 'config/state.json')
 
 const readmeFilePath = path.join(appRoot.path, 'README.md')
 const codeRegex = /<!-- ?Dependencies ?-->([\s\S]*?)(?:<!--)/i
@@ -96,29 +78,42 @@ export const installDependencies = async (
 }
 
 const packageJSONPath = path.join(appRoot.path, 'package.json')
-export const mutatePackageJSON = async (
-  diffs: Record<string, unknown>
-): Promise<void> => {
-  let json = null
+export const formatJSON = (obj: unknown): string => {
+  const json = JSON.parse(fs.readFileSync(packageJSONPath, 'utf8'))
+  return prettier.format(JSON.stringify(obj), {
+    ...(json?.prettier ?? {}),
+    parser: 'json-stringify'
+  })
+}
+
+export const getState = (): State => store(stateFilePath, undefined, defaults)
+
+export const setState = (diffs: Partial<State>): void => {
+  store(stateFilePath, diffs, defaults)
+}
+
+export const store = <T extends Record<string, unknown>>(
+  filePath: string,
+  diffs?: Partial<T>,
+  defaults?: T
+): T => {
+  let json = (defaults ?? {}) as T
   try {
-    json = JSON.parse(fs.readFileSync(packageJSONPath, 'utf8'))
-  } catch {}
-
-  if (json === null) throw new Error('No package.json found')
-
-  for (const [k, v] of Object.entries(diffs)) {
-    if (typeof v === 'function') {
-      json[k] = v(json[k])
-    } else {
-      json[k] = v
+    json = {
+      ...defaults,
+      ...JSON.parse(fs.readFileSync(filePath, 'utf8'))
     }
+  } catch {
+    fs.writeFileSync(filePath, formatJSON(json))
   }
 
-  fs.writeFileSync(
-    packageJSONPath,
-    prettier.format(JSON.stringify(json, null, 2), {
-      ...(json?.prettier ?? {}),
-      parser: 'json-stringify'
-    })
-  )
+  if (diffs) {
+    for (const [k, v] of Object.entries(diffs)) {
+      json[k as keyof T] = typeof v === 'function' ? v(json[k]) : v
+    }
+
+    fs.writeFileSync(filePath, formatJSON(json))
+  }
+
+  return json
 }

@@ -20,18 +20,18 @@ const browserGlobals = {
   'jquery': '$'
 }
 
+const makeExternalPredicate = (externals) => {
+  if (externals.length === 0) {
+    return () => false
+  } else {
+    const pattern = new RegExp(`^(${externals.join('|')})($|/)`)
+    return (id) => pattern.test(id)
+  }
+}
+
 const getExternal = (bundleType) => {
   const peerDependencies = Object.keys(pkg.peerDependencies || {})
   const dependencies = Object.keys(pkg.dependencies)
-
-  const makeExternalPredicate = (externals) => {
-    if (externals.length === 0) {
-      return () => false
-    } else {
-      const pattern = new RegExp(`^(${externals.join('|')})($|/)`)
-      return (id) => pattern.test(id)
-    }
-  }
 
   switch (bundleType) {
     case 'CJS_DEV':
@@ -102,46 +102,5 @@ export default [
       sourcemap: true
     },
     plugins: getPlugins('ES')
-  },
-  {
-    input: './compiled/index.js',
-    external: getExternal('UMD_PROD'),
-    output: {
-      file: pkg.umd,
-      format: 'umd',
-      globals: Object.keys(pkg.peerDependencies || {}).reduce(
-        (dependencyNameMap, npmDependency) => ({
-          ...dependencyNameMap,
-          [npmDependency]:
-            browserGlobals[npmDependency] ||
-            ((npmDependency) => {
-              const pascal = npmDependency
-                .split('-')
-                .map((str) =>
-                  str.length > 0 ? str[0].toUpperCase() + str.slice(1) : ''
-                )
-                .join('')
-              console.warn(
-                dedent`
-                Blindly guessing that the browser global (i.e. window.<NAME>) for npm package...
-                  "${npmDependency}"
-                ...is...
-                  "${pascal}"
-
-                To fix this message
-                  '${npmDependency}': '<NAME>',
-                to 'browserGlobals' in rollup.config.js
-
-                `
-              )
-              return pascal
-            })()
-        }),
-        {}
-      ),
-      name: 'CTRLScripts',
-      sourcemap: true
-    },
-    plugins: getPlugins('UMD_PROD')
   }
 ]

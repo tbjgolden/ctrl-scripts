@@ -32,17 +32,17 @@ export const addComponent = async (name?: string): Promise<void> => {
   fs.mkdirSync(newDir)
   fs.writeFileSync(
     path.join(newDir, 'index.tsx'),
-    dedent`
+    dedent(`
     import React from 'react'
 
     const ${name} = ({ text }: { text: string }): JSX.Element => <h1>{text}</h1>
 
     export default ${name}
-    ` + '\n'
+    `) + '\n'
   )
   fs.writeFileSync(
     path.join(newDir, 'index.test.tsx'),
-    dedent`
+    dedent(`
     import React from 'react'
     import { render, waitFor, screen } from '@testing-library/react'
     import ${name} from '.'
@@ -52,11 +52,11 @@ export const addComponent = async (name?: string): Promise<void> => {
       await waitFor(() => screen.getByRole('heading'))
       expect(screen.getByRole('heading')).toHaveTextContent('hello there')
     })
-    ` + '\n'
+    `) + '\n'
   )
   fs.writeFileSync(
     path.join(newDir, 'index.stories.tsx'),
-    dedent`
+    dedent(`
     import React from 'react'
     import { withKnobs, text } from '@storybook/addon-knobs'
     import ${name} from '.'
@@ -71,7 +71,7 @@ export const addComponent = async (name?: string): Promise<void> => {
       const textValue = text('Name', 'Example Text')
       return <${name} text={textValue} />
     }
-    ` + '\n'
+    `) + '\n'
   )
 
   const indexFile = components.find(({ name }) => name.startsWith('index.ts'))

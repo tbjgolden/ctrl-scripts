@@ -86,6 +86,10 @@ export const formatJSON = (obj: unknown): string => {
   })
 }
 
+export const mutatePackageJSON = (diffs: Record<string, unknown>): void => {
+  store(packageJSONPath, diffs)
+}
+
 export const getState = (): State => store(stateFilePath, undefined, defaults)
 
 export const setState = (diffs: Partial<State>): void => {

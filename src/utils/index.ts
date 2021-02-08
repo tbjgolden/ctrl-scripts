@@ -111,7 +111,7 @@ export const store = <T extends Record<string, unknown>>(
     fs.writeFileSync(filePath, formatJSON(json))
   }
 
-  if (diffs) {
+  if (diffs && Object.keys(diffs).length > 0) {
     for (const [k, v] of Object.entries(diffs)) {
       json[k as keyof T] = typeof v === 'function' ? v(json[k]) : v
     }

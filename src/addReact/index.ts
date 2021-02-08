@@ -2,7 +2,8 @@ import {
   getState,
   setState,
   addScriptDependency,
-  installDependencies
+  installDependencies,
+  mutatePackageJSON
 } from '../utils'
 import fs from 'fs'
 import path from 'path'
@@ -82,6 +83,13 @@ export const addReact = async (): Promise<void> => {
       }
     ` + '\n'
   )
+
+  mutatePackageJSON({
+    scripts: (prev: Record<string, string>) => ({
+      ...prev,
+      storybook: "start-storybook"
+    })
+  })
 
   setState({ hasAddedReact: true })
 }

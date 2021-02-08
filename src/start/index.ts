@@ -12,5 +12,10 @@ export const start = async (): Promise<void> => {
   }
 
   // Jest
-  spawn('yarn', ['run', 'test:src', '--watch'], { stdio: 'inherit' })
+  spawn('yarn', ['watch'], { stdio: 'inherit' })
 }
+
+
+/*
+// stmux -c line -w error -e ERROR -m beep,system -M -- [ "yarn watch" : "npm run dev:sv" ]
+*/

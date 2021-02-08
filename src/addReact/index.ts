@@ -87,6 +87,7 @@ export const addReact = async (): Promise<void> => {
   mutatePackageJSON({
     scripts: (prev: Record<string, string>) => ({
       ...prev,
+      start: "stmux -c line -w error -e ERROR -m beep,system -M -- [ \"yarn watch\" : \"yarn storybook\" ]",
       storybook: "start-storybook"
     })
   })

@@ -1,10 +1,9 @@
-import { addComponent, addReact, setup, start } from '.'
+import { addComponent, addReact, setup } from '.'
 
 const _exports = {
   'add-component': addComponent,
   'add-react': addReact,
-  setup,
-  start
+  setup
 }
 
 if (require.main === module) {
